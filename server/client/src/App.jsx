@@ -267,7 +267,6 @@ function Requests() {
     const [requests, setRequests] = useState([]);
     const [selected, setSelected] = useState(null);
     const [showCreate, setShowCreate] = useState(false);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         socket.emit('getUserApplications');
@@ -294,8 +293,6 @@ function Requests() {
             setSelected(null);
         }, 300);
     };
-
-    if (loading) return <div className="centered-page">Загрузка...</div>;
 
     return (
         <div className="section" style={{ height: 'auto', minHeight: '80vh' }}>
