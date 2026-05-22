@@ -6,12 +6,7 @@
     "socket.io": "^4.8.3"
   },
   "scripts": {
-    "start": "node server.js",
-    "build": "babel client/src --out-dir dist --extensions .js,.jsx"
+    "start": "node server.js"
   },
-  "devDependencies": {
-    "@babel/cli": "^7.28.6",
-    "@babel/core": "^7.29.0",
-    "@babel/preset-react": "^7.28.5"
-  }
+  "devDependencies": {}
 }
