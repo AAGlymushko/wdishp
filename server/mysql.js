@@ -15,6 +15,7 @@ const pool = new Pool({
 
 pool.connect((err) => {
     const string = "Подключение к БД произошло ";
+    if (err) console.error("Database connection error:", err);
     console.log(string + (err ? "с ошибкой: " + err : "успешно!"));
 });
 
@@ -26,6 +27,7 @@ const addUser = (userHash, userPhon, callback) => {
     `;
     pool.query(ensurePhoneSql, [userPhon], (err) => {
         if (err) {
+            console.error("addUser: ensurePhoneSql error", err);
             callback(false);
             return;
         }
@@ -41,6 +43,7 @@ const addUser = (userHash, userPhon, callback) => {
 
         pool.query(sql, values, (err, result) => {
             if (err) {
+                console.error("addUser: insert app_user error", err);
                 callback(false);
             } else {
                 callback(result.rowCount === 1);
@@ -58,6 +61,7 @@ const checkUser = (data, callback) => {
         const values = [data.phoneNumber, data.name, true];
         pool.query(sql, values, (err, results) => {
             if (err) {
+                console.error("checkUser/isCheckFirstPass: query error", err);
                 callback(false);
             } else {
                 callback(results.rows.length === 1);
@@ -71,7 +75,12 @@ const checkUser = (data, callback) => {
     `;
     const values = [data.phoneNumber, data.name];
     pool.query(sql, values, (err, userResults) => {
-        if (err || userResults.rows.length === 0) {
+        if (err) {
+            console.error("checkUser: main query error", err);
+            callback(false);
+            return;
+        }
+        if (userResults.rows.length === 0) {
             callback(false);
             return;
         }
@@ -104,6 +113,7 @@ const redactPerson = (person, callback) => {
     ];
     pool.query(sql, values, (err, result) => {
         if (err) {
+            console.error("redactPerson: update error", err);
             callback(false);
         } else {
             callback(result.rowCount === 1);
@@ -115,6 +125,7 @@ const getPersonByName = (name, callback) => {
     const sql = `SELECT * FROM app_user WHERE user_name = $1`;
     pool.query(sql, [name], (err, results) => {
         if (err) {
+            console.error("getPersonByName: query error", err);
             return callback(false, null);
         }
         if (results.rows.length === 0) {
@@ -144,6 +155,7 @@ const getPersonByPhoneNumber = (phone_number, callback) => {
     const sql = `SELECT * FROM app_user WHERE user_phone_number = $1`;
     pool.query(sql, [phone_number], (err, results) => {
         if (err) {
+            console.error("getPersonByPhoneNumber: query error", err);
             return callback(false, null);
         }
         if (results.rows.length === 0) {
@@ -173,6 +185,7 @@ const getBdService = (data, callback) => {
     const sqlGetUserId = `SELECT user_id FROM app_user WHERE user_name = $1`;
     pool.query(sqlGetUserId, [data.name], (err, userResults) => {
         if (err) {
+            console.error("getBdService: getUserId error", err);
             return callback(false, null);
         }
         if (userResults.rows.length === 0) {
@@ -195,6 +208,7 @@ const getBdService = (data, callback) => {
         `;
         pool.query(sqlServices, [userId], (err, services) => {
             if (err) {
+                console.error("getBdService: services query error", err);
                 return callback(false, null);
             }
             if (!services.rows || services.rows.length === 0) {
@@ -209,6 +223,7 @@ const getBdRate = (data, callback) => {
     const sqlGetUserId = `SELECT user_id FROM app_user WHERE user_name = $1`;
     pool.query(sqlGetUserId, [data.name], (err, userResults) => {
         if (err) {
+            console.error("getBdRate: getUserId error", err);
             return callback(false, null);
         }
         if (userResults.rows.length === 0) {
@@ -223,7 +238,11 @@ const getBdRate = (data, callback) => {
             WHERE urs.user_id = $1
         `;
         pool.query(sqlGetRateId, [userId], (err, rateResult) => {
-            if (err || !rateResult.rows.length) {
+            if (err) {
+                console.error("getBdRate: getRateId error", err);
+                return callback(false, null);
+            }
+            if (!rateResult.rows.length) {
                 return callback(false, null);
             }
             const rateId = rateResult.rows[0].rate_id;
@@ -242,7 +261,11 @@ const getBdRate = (data, callback) => {
                 ORDER BY s.service_id
             `;
             pool.query(sqlServices, [rateId], (err, rows) => {
-                if (err || !rows.rows || rows.rows.length === 0) {
+                if (err) {
+                    console.error("getBdRate: services query error", err);
+                    return callback(false, null);
+                }
+                if (!rows.rows || rows.rows.length === 0) {
                     return callback(false, null);
                 }
                 const rate = {
@@ -275,6 +298,7 @@ const getBdRates = (callback) => {
     `;
     pool.query(sql, (err, rows) => {
         if (err) {
+            console.error("getBdRates: query error", err);
             return callback(false, null);
         }
         if (!rows.rows || rows.rows.length === 0) {
@@ -304,14 +328,22 @@ const getBdRates = (callback) => {
 const setBdUserRate = (data, rate_id, callback) => {
     const sqlGetUserId = `SELECT user_id FROM app_user WHERE user_name = $1`;
     pool.query(sqlGetUserId, [data.name], (err, userRows) => {
-        if (err || !userRows.rows.length) {
+        if (err) {
+            console.error("setBdUserRate: getUserId error", err);
+            return callback(false);
+        }
+        if (!userRows.rows.length) {
             return callback(false);
         }
         const userId = userRows.rows[0].user_id;
 
         const sqlGetRateService = `SELECT rate_service_id FROM rate_service WHERE rate_id = $1 LIMIT 1`;
         pool.query(sqlGetRateService, [rate_id], (err, rsRows) => {
-            if (err || !rsRows.rows.length) {
+            if (err) {
+                console.error("setBdUserRate: getRateService error", err);
+                return callback(false);
+            }
+            if (!rsRows.rows.length) {
                 return callback(false);
             }
             const rateServiceId = rsRows.rows[0].rate_service_id;
@@ -323,6 +355,7 @@ const setBdUserRate = (data, rate_id, callback) => {
             `;
             pool.query(sqlUpsert, [userId, rateServiceId], (err, result) => {
                 if (err) {
+                    console.error("setBdUserRate: upsert error", err);
                     callback(false);
                 } else {
                     callback(result.rowCount > 0);
@@ -336,6 +369,7 @@ const getBdUserServices = (data, callback) => {
     const sqlGetUserId = `SELECT user_id FROM app_user WHERE user_name = $1`;
     pool.query(sqlGetUserId, [data.name], (err, userRows) => {
         if (err) {
+            console.error("getBdUserServices: getUserId error", err);
             return callback(false, null);
         }
         if (userRows.rows.length === 0) {
@@ -358,6 +392,7 @@ const getBdUserServices = (data, callback) => {
         `;
         pool.query(sqlServices, [userId], (err, services) => {
             if (err) {
+                console.error("getBdUserServices: services query error", err);
                 return callback(false, null);
             }
             if (!services.rows) {
@@ -383,6 +418,7 @@ const getBdServices = (callback) => {
     `;
     pool.query(sql, (err, services) => {
         if (err) {
+            console.error("getBdServices: query error", err);
             return callback(false, null);
         }
         if (!services.rows) {
@@ -396,6 +432,7 @@ const setBdUserService = (data, service_id, callback) => {
     const sql = `SELECT user_id FROM app_user WHERE user_name = $1`;
     pool.query(sql, [data.name], (err, result) => {
         if (err) {
+            console.error("setBdUserService: getUserId error", err);
             return callback(false);
         }
         if (!result.rows.length) {
@@ -411,6 +448,7 @@ const setBdUserService = (data, service_id, callback) => {
         `;
         pool.query(checkTariffSql, [user_id, service_id], (err, tariffResult) => {
             if (err) {
+                console.error("setBdUserService: checkTariff error", err);
                 return callback(false);
             }
             if (tariffResult.rows.length > 0) {
@@ -425,6 +463,7 @@ const setBdUserService = (data, service_id, callback) => {
             const values = [user_id, service_id];
             pool.query(sql0, values, (err, result) => {
                 if (err) {
+                    console.error("setBdUserService: check existing error", err);
                     return callback(false);
                 }
                 if (result.rows.length > 0) {
@@ -433,6 +472,7 @@ const setBdUserService = (data, service_id, callback) => {
                         WHERE user_id = $1 AND service_id = $2
                     `;
                     pool.query(sql1, values, (err) => {
+                        if (err) console.error("setBdUserService: delete error", err);
                         return callback(!err);
                     });
                 } else {
@@ -441,6 +481,7 @@ const setBdUserService = (data, service_id, callback) => {
                         VALUES ($1, $2)
                     `;
                     pool.query(sql1, values, (err) => {
+                        if (err) console.error("setBdUserService: insert error", err);
                         return callback(!err);
                     });
                 }
@@ -452,7 +493,10 @@ const setBdUserService = (data, service_id, callback) => {
 const getBdUserApplications = (data, callback) => {
     const sql = `SELECT user_id FROM app_user WHERE user_name = $1`;
     pool.query(sql, [data.name], (err, result) => {
-        if (err) return callback(false, null);
+        if (err) {
+            console.error("getBdUserApplications: getUserId error", err);
+            return callback(false, null);
+        }
         if (!result.rows.length) return callback(false, null);
 
         const sql0 = `
@@ -462,7 +506,10 @@ const getBdUserApplications = (data, callback) => {
             WHERE a.user_id = $1
         `;
         pool.query(sql0, [result.rows[0].user_id], (err, rows) => {
-            if (err) return callback(false, null);
+            if (err) {
+                console.error("getBdUserApplications: applications query error", err);
+                return callback(false, null);
+            }
             if (!rows.rows.length) return callback(false, null);
 
             const applications = rows.rows.map(row => ({
@@ -492,7 +539,10 @@ const getBdApplications = (callback) => {
         ORDER BY a.status_id
     `;
     pool.query(sql, [], (err, rows) => {
-        if (err) return callback(false, null);
+        if (err) {
+            console.error("getBdApplications: query error", err);
+            return callback(false, null);
+        }
         if (!rows.rows.length) return callback(false, null);
         callback(true, rows.rows);
     });
@@ -501,7 +551,10 @@ const getBdApplications = (callback) => {
 const deleteUserBdApplication = (data, application_id, callback) => {
     const sql = `SELECT user_id FROM app_user WHERE user_name = $1`;
     pool.query(sql, [data.name], (err, result) => {
-        if (err) return callback(false);
+        if (err) {
+            console.error("deleteUserBdApplication: getUserId error", err);
+            return callback(false);
+        }
         if (!result.rows.length) return callback(false);
 
         const user_id = result.rows[0].user_id;
@@ -511,7 +564,10 @@ const deleteUserBdApplication = (data, application_id, callback) => {
             WHERE user_id = $1 AND application_id = $2
         `;
         pool.query(deleteSql, [user_id, application_id], (err) => {
-            if (err) return callback(false);
+            if (err) {
+                console.error("deleteUserBdApplication: delete error", err);
+                return callback(false);
+            }
             return callback(true);
         });
     });
@@ -520,7 +576,10 @@ const deleteUserBdApplication = (data, application_id, callback) => {
 const createBdUserApplication = (data, application_value, callback) => {
     const sql = `SELECT user_id FROM app_user WHERE user_name = $1`;
     pool.query(sql, [data.name], (err, result) => {
-        if (err) return callback(false);
+        if (err) {
+            console.error("createBdUserApplication: getUserId error", err);
+            return callback(false);
+        }
         if (!result.rows.length) return callback(false);
 
         const user_id = result.rows[0].user_id;
@@ -530,7 +589,10 @@ const createBdUserApplication = (data, application_value, callback) => {
             VALUES ($1, $2, 3)
         `;
         pool.query(insertSql, [user_id, application_value], (err) => {
-            if (err) return callback(false);
+            if (err) {
+                console.error("createBdUserApplication: insert error", err);
+                return callback(false);
+            }
             return callback(true);
         });
     });
@@ -540,6 +602,7 @@ const createBdRate = (rate_name, services, callback) => {
     const createRateSql = `INSERT INTO rate (rate_name) VALUES ($1) RETURNING rate_id`;
     pool.query(createRateSql, [rate_name], (err, result) => {
         if (err) {
+            console.error("createBdRate: insert rate error", err);
             return callback(false);
         }
         const rateId = result.rows[0].rate_id;
@@ -556,6 +619,7 @@ const createBdRate = (rate_name, services, callback) => {
             const insertServiceSql = `INSERT INTO service (service_name, service_price) VALUES ($1, $2) RETURNING service_id`;
             pool.query(insertServiceSql, [service.service_name, service.service_price], (err, result) => {
                 if (err) {
+                    console.error("createBdRate: insert service error", err);
                     hasError = true;
                     return callback(false);
                 }
@@ -563,6 +627,7 @@ const createBdRate = (rate_name, services, callback) => {
                 const insertRateServiceSql = `INSERT INTO rate_service (rate_id, service_id) VALUES ($1, $2)`;
                 pool.query(insertRateServiceSql, [rateId, serviceId], (err) => {
                     if (err) {
+                        console.error("createBdRate: insert rate_service error", err);
                         hasError = true;
                         return callback(false);
                     }
@@ -582,6 +647,7 @@ const createBdService = (service_name, service_price, callback) => {
     `;
     pool.query(insertServiceSql, [service_name, service_price], (err) => {
         if (err) {
+            console.error("createBdService: insert error", err);
             return callback(false);
         }
         return callback(true);
@@ -592,6 +658,7 @@ const updateBdApplicationStatus = (data, application_id, status_id, callback) =>
     const sql = `SELECT user_id FROM app_user WHERE user_name = $1`;
     pool.query(sql, [data.name], (err, result) => {
         if (err) {
+            console.error("updateBdApplicationStatus: getUserId error", err);
             return callback(false);
         }
         const adminId = result.rows[0].user_id;
@@ -602,6 +669,7 @@ const updateBdApplicationStatus = (data, application_id, status_id, callback) =>
         `;
         pool.query(updateApplicationSql, [adminId, status_id, application_id], (err) => {
             if (err) {
+                console.error("updateBdApplicationStatus: update error", err);
                 return callback(false);
             }
             return callback(true);
