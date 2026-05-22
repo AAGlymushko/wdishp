@@ -1,10 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-const socket = io({
-  transports: ['polling', 'websocket'],
-  upgrade: true
-});
+const socket = io('https://wdishpeasylifeserver.onrender.com/');
 let name = null;
 let password = null;
 let phoneNumber = null;
