@@ -14,7 +14,7 @@ html {
     overflow-y: scroll;
 }
 
-/* Верхняя и нижняя полосы */
+/* ========== Десктопная версия (по умолчанию) ========== */
 .strips {
     height: 80px;
     background: rgb(11, 43, 64);
@@ -30,8 +30,6 @@ html {
     left: 0;
     right: 0;
     justify-content: flex-end;
-    flex-wrap: wrap;
-    gap: 6px;
 }
 
 .strips-bottom {
@@ -41,7 +39,6 @@ html {
     right: 0;
 }
 
-/* Кнопки навигации */
 .nav-btn {
     background: transparent;
     border: none;
@@ -54,7 +51,6 @@ html {
     margin-left: 6px;
     height: 80px;
     width: 150px;
-    transition: background 0.2s;
 }
 
     .nav-btn:hover {
@@ -66,7 +62,6 @@ html {
         background: #6096ba;
     }
 
-/* Главный экран */
 .centered-page {
     display: flex;
     flex-direction: column;
@@ -91,19 +86,17 @@ html {
     margin: 0;
     position: absolute;
     bottom: 30vh;
-    left: 30vh;
+    left: 32vh;
     right: 0;
     text-align: center;
 }
 
-/* Форма авторизации */
 .form-card {
     background: #274c77;
     border: 1px solid #6096ba;
     border-radius: 4px;
     padding: 24px 20px;
     width: 320px;
-    max-width: 90%;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -166,7 +159,6 @@ html {
         font-size: 14px;
     }
 
-/* Карточки */
 .card {
     background: white;
     border: 1px solid #ddd;
@@ -198,7 +190,6 @@ html {
     gap: 20px;
 }
 
-/* Секции */
 .section {
     width: 90%;
     max-width: 1100px;
@@ -216,7 +207,6 @@ html {
         color: #0a2f4d;
     }
 
-/* Заявки */
 .requests-layout {
     display: flex;
     gap: 24px;
@@ -323,185 +313,158 @@ textarea {
     grid-column: 1 / -1;
 }
 
-/* ================================
-   Адаптивность
-   ================================ */
-
-/* Планшеты и небольшие ноутбуки */
-@media (max-width: 1024px) {
-    .main-title {
-        font-size: 6rem;
-    }
-
-    .main-signature {
-        font-size: 1.5rem;
-        left: 20vw;
-        bottom: 20vh;
-    }
-
-    .strips {
-        height: 70px;
-        padding: 0 16px;
-    }
-
-    .nav-btn {
-        width: auto;
-        min-width: 90px;
-        height: 70px;
-        font-size: 16px;
-        padding: 6px 10px;
-    }
-
-        .nav-btn.active {
-            height: 75px;
-        }
-
-    .section {
-        width: 95%;
-        height: auto;
-        max-height: 80vh;
-        overflow-y: auto;
-    }
-
-    main {
-        padding-top: 70px;
-        padding-bottom: 70px;
-    }
-
-    .centered-page {
-        min-height: calc(100vh - 140px);
-    }
-}
-
-/* Телефоны */
+/* ========== Мобильная версия (телефоны, до 768px) ========== */
 @media (max-width: 768px) {
-    /* Верхняя панель: кнопки становятся крупнее и переносятся */
+    /* Увеличиваем верхнюю и нижнюю полосы навигации */
     .strips {
-        height: auto;
-        min-height: 50px;
-        padding: 8px 4px;
-        flex-wrap: wrap;
-        justify-content: center;
+        height: auto; /* высота по содержимому, чтобы вместить крупные кнопки */
+        min-height: 90px; /* минимальная высота */
+        padding: 10px 8px;
+        flex-wrap: wrap; /* кнопки могут переноситься, если не помещаются */
+        justify-content: center; /* центрируем меню */
+        gap: 6px;
+    }
+
+    /* Фиксированные полосы по-прежнему прибиты к верху/низу */
+    .strips-top,
+    .strips-bottom {
+        position: fixed;
+        left: 0;
+        right: 0;
     }
 
     .strips-top {
-        justify-content: center;
+        top: 0;
     }
 
     .strips-bottom {
-        height: 40px;
+        bottom: 0;
     }
 
-    /* Навигационные кнопки – крупные, удобные для пальцев */
+    /* Кнопки навигации: крупнее, занимают равную ширину */
     .nav-btn {
-        width: auto;
-        min-width: 100px;
-        height: auto;
-        min-height: 48px;
-        padding: 10px 16px;
-        font-size: 16px;
-        margin: 4px;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        height: 70px; /* достаточно высокие для пальца */
+        width: auto; /* ширина по содержимому/равномерно */
+        flex: 1 1 auto; /* растягиваются, занимая доступное место */
+        font-size: 20px; /* крупный читаемый текст */
+        padding: 12px 18px;
+        margin: 0 4px;
+        white-space: nowrap;
     }
 
         .nav-btn.active {
-            height: auto;
-            background: #6096ba;
+            height: 74px; /* чуть выше активная, но не ломает */
         }
 
-    /* Главный заголовок */
+    /* Центральная страница (логин, заголовок) */
+    .centered-page {
+        min-height: calc(100vh - 140px); /* с учётом новых высот полос */
+        padding: 40px 16px 30px;
+    }
+
     .main-title {
-        font-size: 3.5rem;
-        letter-spacing: 1px;
+        font-size: 4rem; /* на мобиле всё равно крупно, но влезает */
+        letter-spacing: 2px;
     }
 
     .main-signature {
-        position: static;
-        font-size: 1.3rem;
-        margin-top: 12px;
+        position: static; /* убираем абсолютное позиционирование */
+        font-size: 1.4rem;
+        margin-top: 16px;
+        left: auto;
+        bottom: auto;
         text-align: center;
-        letter-spacing: 1px;
     }
 
-    /* Форма авторизации */
+    /* Формы авторизации */
     .form-card {
         width: 90%;
         max-width: 400px;
+        padding: 32px 20px;
     }
 
         .form-card h2 {
-            font-size: 22px;
+            font-size: 28px;
         }
 
     .input {
-        font-size: 16px;
-        padding: 12px;
+        padding: 14px 16px;
+        font-size: 18px;
     }
 
     .btn {
-        font-size: 16px;
-        padding: 12px;
-        min-height: 48px;
+        padding: 14px;
+        font-size: 18px;
     }
 
         .btn.small {
-            font-size: 14px;
-            padding: 10px 16px;
-            min-height: 44px;
+            padding: 10px 18px;
+            font-size: 16px;
         }
 
-    /* Секции */
-    .section {
-        width: 100%;
-        height: auto;
-        overflow-y: visible;
-        padding: 16px;
-        border-radius: 0;
-    }
-
-    /* Заявки – в столбик */
-    .requests-layout {
-        flex-direction: column;
-        height: auto;
-        gap: 12px;
-    }
-
-    .requests-list {
-        max-height: 40vh;
-    }
-
-    .details-panel {
-        flex: none;
-        width: 100%;
-    }
-
-    /* Сетка карточек – одна колонка */
-    .grid {
-        grid-template-columns: 1fr;
+    /* Карточки и секции */
+    .card {
+        padding: 20px;
         gap: 16px;
     }
 
-    /* Отступы для контента, чтобы не перекрывался верхней и нижней панелями */
-    main {
-        padding-top: 140px; /* с учётом переноса кнопок */
-        padding-bottom: 50px;
+        .card h3 {
+            font-size: 1.4rem;
+        }
+
+    .row {
+        font-size: 16px;
+        padding: 10px 0;
     }
 
-    .centered-page {
-        min-height: calc(100vh - 190px);
-        padding: 20px 16px;
+    /* Секция с заявками */
+    .section {
+        width: 100%;
+        height: auto;
+        max-height: 75vh;
+        padding: 16px;
     }
 
-    /* Дополнительные улучшения */
+    .requests-layout {
+        flex-direction: column;
+        height: auto;
+        gap: 16px;
+    }
+
+    .requests-list,
+    .details-panel {
+        width: 100%;
+        max-height: 45vh;
+    }
+
     .request-item {
-        padding: 14px;
-        margin-bottom: 6px;
+        padding: 16px;
     }
 
-    .card {
-        padding: 14px;
+    .request-meta {
+        font-size: 1rem;
     }
+
+    .full-text {
+        font-size: 15px;
+        padding: 16px;
+    }
+
+    .create-form {
+        padding: 20px;
+    }
+
+    textarea {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+        .actions .btn {
+            width: 100%;
+        }
 }
