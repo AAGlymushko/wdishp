@@ -335,13 +335,13 @@ textarea {
 
 /* ========== МОБИЛЬНЫЕ ТЕЛЕФОНЫ (до 768px) ========== */
 @media (max-width: 768px) {
-    /* Навигационные полосы - оптимизация для вертикального экрана */
+    /* Навигационные полосы - увеличены и центрированы */
     .strips {
         min-height: auto;
-        padding: 12px 8px;
+        padding: 16px 12px;
         flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 8px;
+        justify-content: center;
+        gap: 12px;
         height: auto;
     }
 
@@ -351,44 +351,46 @@ textarea {
         left: 0;
         right: 0;
         background: rgb(11, 43, 64);
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
     }
 
     .strips-top {
         top: 0;
         justify-content: center;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255,255,255,0.15);
     }
 
     .strips-bottom {
         bottom: 0;
         justify-content: center;
-        border-top: 1px solid rgba(255,255,255,0.1);
+        border-top: 1px solid rgba(255,255,255,0.15);
     }
 
-    /* Кнопки навигации - крупные, удобные для пальцев */
+    /* Кнопки навигации - несколько рядов, центрированы, увеличены */
     .nav-btn {
-        flex: 1;
-        min-width: 80px;
-        height: 56px;
-        font-size: 16px;
-        padding: 8px 12px;
-        margin: 0 4px;
+        flex: 0 1 auto;
+        min-width: 100px;
+        height: 64px;
+        font-size: 18px;
+        padding: 10px 16px;
+        margin: 0;
         white-space: nowrap;
-        border-radius: 8px;
+        border-radius: 12px;
         font-weight: 600;
+        letter-spacing: 0.5px;
     }
 
         .nav-btn.active {
-            height: 56px;
+            height: 64px;
             background: #6096ba;
-            transform: scale(1.02);
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
-    /* Основной контент с учетом фиксированных полос */
+    /* Основной контент с учетом увеличенных полос */
     .centered-page {
-        min-height: calc(100vh - 140px);
-        padding: 80px 16px 70px;
+        min-height: calc(100vh - 160px);
+        padding: 90px 16px 80px;
         justify-content: flex-start;
     }
 
@@ -560,11 +562,22 @@ textarea {
 
     /* Дополнительные улучшения для очень маленьких экранов */
     @media (max-width: 480px) {
-        .nav-btn {
-            min-width: 65px;
-            font-size: 14px;
-            padding: 6px 8px;
+        .strips {
+            padding: 12px 8px;
+            gap: 10px;
         }
+
+        .nav-btn {
+            min-width: 85px;
+            height: 58px;
+            font-size: 15px;
+            padding: 8px 12px;
+            border-radius: 10px;
+        }
+
+            .nav-btn.active {
+                height: 58px;
+            }
 
         .main-title {
             font-size: 2.5rem;
@@ -592,6 +605,14 @@ textarea {
             gap: 10px;
         }
     }
+
+    /* Для экранов от 481px до 600px - три колонки */
+    @media (min-width: 481px) and (max-width: 600px) {
+        .nav-btn {
+            min-width: 110px;
+            font-size: 16px;
+        }
+    }
 }
 
 /* ========== ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ДЛЯ ТАЧ-УСТРОЙСТВ ========== */
@@ -615,7 +636,7 @@ textarea {
         .nav-btn:active,
         .btn:active {
             opacity: 0.8;
-            transform: scale(0.98);
+            transform: scale(0.96);
         }
 
         .request-item:active {
