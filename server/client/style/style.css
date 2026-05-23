@@ -1,3 +1,321 @@
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    background: linear-gradient(rgb(255, 255, 255) 0%, rgb(245, 254, 255) 35%, rgb(245, 254, 255) 65%, rgb(255, 255, 255) 100%);
+    color: #0a2f4d;
+}
+
+html {
+    overflow-y: scroll;
+}
+
+/* ========== Десктопная версия (по умолчанию) ========== */
+.strips {
+    height: 80px;
+    background: rgb(11, 43, 64);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 100;
+}
+
+.strips-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    justify-content: flex-end;
+}
+
+.strips-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 6px;
+    height: 80px;
+    width: 150px;
+    transition: all 0.2s ease;
+}
+
+    .nav-btn:hover {
+        background: rgba(96, 150, 186, 0.3);
+    }
+
+    .nav-btn.active {
+        height: 85px;
+        background: #6096ba;
+    }
+
+.centered-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px);
+    padding: 60px 20px 40px;
+    position: relative;
+}
+
+.main-title {
+    font-size: 10rem;
+    color: rgb(11, 43, 64);
+    letter-spacing: 4px;
+    margin: 0;
+}
+
+.main-signature {
+    font-size: 2rem;
+    color: rgb(11, 43, 64);
+    letter-spacing: 4px;
+    margin: 0;
+    position: absolute;
+    bottom: 30vh;
+    left: 32vh;
+    right: 0;
+    text-align: center;
+}
+
+.form-card {
+    background: #274c77;
+    border: 1px solid #6096ba;
+    border-radius: 4px;
+    padding: 24px 20px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    color: #e0f7fa;
+}
+
+    .form-card h2 {
+        margin: 0 0 4px;
+        font-size: 24px;
+    }
+
+.input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #6096ba;
+    border-radius: 4px;
+    background: rgba(167, 202, 228, 0.2);
+    color: #e0f7fa;
+    font-size: 15px;
+}
+
+    .input::placeholder {
+        color: #a3cef1aa;
+    }
+
+    .input:focus {
+        border-color: #8bb4d0;
+        background: rgba(167, 202, 228, 0.3);
+        outline: none;
+    }
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #6096ba;
+    color: white;
+    transition: background 0.2s ease;
+}
+
+    .btn:hover {
+        background: #7baed2;
+    }
+
+    .btn.danger {
+        background: #e57373;
+    }
+
+        .btn.danger:hover {
+            background: #f08080;
+        }
+
+    .btn.small {
+        width: auto;
+        padding: 6px 14px;
+        font-size: 14px;
+    }
+
+.card {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+    .card h3 {
+        margin: 0 0 8px;
+        font-size: 1.2rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 6px;
+    }
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.section {
+    width: 90%;
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 4px;
+    padding: 20px;
+    height: 80vh;
+    overflow-y: auto;
+}
+
+    .section h2 {
+        text-align: center;
+        margin: 0 0 20px;
+        color: #0a2f4d;
+    }
+
+.requests-layout {
+    display: flex;
+    gap: 24px;
+    height: calc(80vh - 60px);
+}
+
+.requests-list {
+    flex: 1;
+    overflow-y: auto;
+    background: rgba(255,255,255,0.8);
+    border-radius: 4px;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.request-item {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .request-item.active {
+        border-left: 4px solid #1976d2;
+        background: #e3f0fa;
+    }
+
+.request-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.status {
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: #e0e0e0;
+}
+
+.details-panel {
+    flex: 2;
+    background: white;
+    border-radius: 4px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.full-text {
+    white-space: pre-wrap;
+    font-family: monospace;
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.placeholder-text {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    padding: 40px;
+}
+
+.create-form {
+    background: white;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+}
+
+textarea {
+    width: 100%;
+    border: 1px solid #6096ba;
+    border-radius: 4px;
+    padding: 8px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.no-items {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    grid-column: 1 / -1;
+}
+
 /* ========== МОБИЛЬНЫЕ ТЕЛЕФОНЫ (до 768px) ========== */
 @media (max-width: 768px) {
     /* Навигационные полосы - с горизонтальной прокруткой */
