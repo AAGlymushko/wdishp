@@ -1,352 +1,35 @@
-* {
-    box-sizing: border-box;
-}
-
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-    background: linear-gradient(rgb(255, 255, 255) 0%, rgb(245, 254, 255) 35%, rgb(245, 254, 255) 65%, rgb(255, 255, 255) 100%);
-    color: #0a2f4d;
-}
-
-html {
-    overflow-y: scroll;
-}
-
-/* ========== Десктопная версия (по умолчанию) ========== */
-.strips {
-    height: 80px;
-    background: rgb(11, 43, 64);
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    z-index: 100;
-}
-
-.strips-top {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    justify-content: flex-end;
-}
-
-.strips-bottom {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-.nav-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    padding: 6px 14px;
-    border-radius: 4px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-left: 6px;
-    height: 80px;
-    width: 150px;
-    transition: all 0.2s ease;
-}
-
-    .nav-btn:hover {
-        background: rgba(96, 150, 186, 0.3);
-    }
-
-    .nav-btn.active {
-        height: 85px;
-        background: #6096ba;
-    }
-
-.centered-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 120px);
-    padding: 60px 20px 40px;
-    position: relative;
-}
-
-.main-title {
-    font-size: 10rem;
-    color: rgb(11, 43, 64);
-    letter-spacing: 4px;
-    margin: 0;
-}
-
-.main-signature {
-    font-size: 2rem;
-    color: rgb(11, 43, 64);
-    letter-spacing: 4px;
-    margin: 0;
-    position: absolute;
-    bottom: 30vh;
-    left: 32vh;
-    right: 0;
-    text-align: center;
-}
-
-.form-card {
-    background: #274c77;
-    border: 1px solid #6096ba;
-    border-radius: 4px;
-    padding: 24px 20px;
-    width: 320px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
-    color: #e0f7fa;
-}
-
-    .form-card h2 {
-        margin: 0 0 4px;
-        font-size: 24px;
-    }
-
-.input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #6096ba;
-    border-radius: 4px;
-    background: rgba(167, 202, 228, 0.2);
-    color: #e0f7fa;
-    font-size: 15px;
-}
-
-    .input::placeholder {
-        color: #a3cef1aa;
-    }
-
-    .input:focus {
-        border-color: #8bb4d0;
-        background: rgba(167, 202, 228, 0.3);
-        outline: none;
-    }
-
-.btn {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    background: #6096ba;
-    color: white;
-    transition: background 0.2s ease;
-}
-
-    .btn:hover {
-        background: #7baed2;
-    }
-
-    .btn.danger {
-        background: #e57373;
-    }
-
-        .btn.danger:hover {
-            background: #f08080;
-        }
-
-    .btn.small {
-        width: auto;
-        padding: 6px 14px;
-        font-size: 14px;
-    }
-
-.card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-    .card h3 {
-        margin: 0 0 8px;
-        font-size: 1.2rem;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 6px;
-    }
-
-.row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-}
-
-.section {
-    width: 90%;
-    max-width: 1100px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 4px;
-    padding: 20px;
-    height: 80vh;
-    overflow-y: auto;
-}
-
-    .section h2 {
-        text-align: center;
-        margin: 0 0 20px;
-        color: #0a2f4d;
-    }
-
-.requests-layout {
-    display: flex;
-    gap: 24px;
-    height: calc(80vh - 60px);
-}
-
-.requests-list {
-    flex: 1;
-    overflow-y: auto;
-    background: rgba(255,255,255,0.8);
-    border-radius: 4px;
-    padding: 8px;
-    border: 1px solid #ccc;
-}
-
-.request-item {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 12px;
-    margin-bottom: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-    .request-item.active {
-        border-left: 4px solid #1976d2;
-        background: #e3f0fa;
-    }
-
-.request-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-}
-
-.status {
-    font-weight: bold;
-    padding: 2px 8px;
-    border-radius: 4px;
-    background: #e0e0e0;
-}
-
-.details-panel {
-    flex: 2;
-    background: white;
-    border-radius: 4px;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.details-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
-}
-
-.full-text {
-    white-space: pre-wrap;
-    font-family: monospace;
-    background: #f5f5f5;
-    padding: 12px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-}
-
-.placeholder-text {
-    color: #888;
-    font-style: italic;
-    text-align: center;
-    padding: 40px;
-}
-
-.create-form {
-    background: white;
-    border-radius: 4px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid #ccc;
-}
-
-textarea {
-    width: 100%;
-    border: 1px solid #6096ba;
-    border-radius: 4px;
-    padding: 8px;
-    font-family: inherit;
-    resize: vertical;
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 12px;
-}
-
-.no-items {
-    text-align: center;
-    padding: 40px;
-    color: #666;
-    grid-column: 1 / -1;
-}
-
-/* ========== ПЛАНШЕТЫ (768px - 1024px) ========== */
-@media (max-width: 1024px) and (min-width: 769px) {
-    .nav-btn {
-        width: 130px;
-        font-size: 16px;
-    }
-
-    .main-title {
-        font-size: 7rem;
-    }
-
-    .main-signature {
-        font-size: 1.6rem;
-        left: 20vh;
-    }
-}
-
 /* ========== МОБИЛЬНЫЕ ТЕЛЕФОНЫ (до 768px) ========== */
 @media (max-width: 768px) {
-    /* Навигационные полосы - адаптивные, с переносом кнопок */
+    /* Навигационные полосы - с горизонтальной прокруткой */
     .strips {
         min-height: auto;
-        padding: 16px 12px;
+        padding: 12px 0;
         display: flex;
-        flex-wrap: wrap; /* Включаем перенос элементов */
-        justify-content: center;
         align-items: center;
-        gap: 12px;
         height: auto;
         background: rgb(11, 43, 64);
+        overflow-x: auto; /* Включаем горизонтальную прокрутку */
+        overflow-y: hidden;
+        flex-wrap: nowrap; /* Запрещаем перенос - будет прокрутка */
+        justify-content: flex-start; /* Выравниваем по левому краю */
+        gap: 8px;
+        scrollbar-width: thin; /* Тонкий скроллбар для Firefox */
+        -webkit-overflow-scrolling: touch; /* Плавный скролл на iOS */
     }
+
+        /* Стилизация скроллбара для Webkit браузеров */
+        .strips::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        .strips::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .strips::-webkit-scrollbar-thumb {
+            background: #6096ba;
+            border-radius: 3px;
+        }
 
     .strips-top,
     .strips-bottom {
@@ -358,47 +41,43 @@ textarea {
 
     .strips-top {
         top: 0;
-        justify-content: center;
         border-bottom: 1px solid rgba(255,255,255,0.15);
     }
 
     .strips-bottom {
         bottom: 0;
-        justify-content: center;
+        justify-content: flex-start; /* Выравниваем по левому краю */
         border-top: 1px solid rgba(255,255,255,0.15);
     }
 
-    /* Кнопки навигации — гибкие, с переносом на новую строку */
+    /* Кнопки навигации — фиксированная ширина, не сжимаются */
     .nav-btn {
-        flex: 0 1 auto; /* Не растягиваются, но могут сжиматься */
-        min-width: 100px; /* Минимальная ширина для читаемости */
-        max-width: 160px; /* Ограничение максимальной ширины */
-        height: 64px;
-        font-size: 18px;
-        padding: 10px 16px;
+        flex: 0 0 auto; /* Кнопки не сжимаются и не растягиваются */
+        width: auto;
+        min-width: 100px;
+        height: 56px;
+        font-size: 16px;
+        padding: 8px 16px;
         margin: 0;
         white-space: nowrap;
-        border-radius: 12px;
+        border-radius: 8px;
         font-weight: 600;
         letter-spacing: 0.5px;
         text-align: center;
     }
 
         .nav-btn.active {
-            height: 64px;
+            height: 56px;
             background: #6096ba;
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
-    /* Основной контент с учетом увеличенных полос */
+    /* Остальной код остается без изменений */
     .centered-page {
         min-height: calc(100vh - 160px);
         padding: 90px 16px 80px;
         justify-content: flex-start;
     }
 
-    /* Заголовки на мобильных */
     .main-title {
         font-size: 3.5rem;
         letter-spacing: 2px;
@@ -416,7 +95,6 @@ textarea {
         left: auto;
     }
 
-    /* Формы авторизации - на всю ширину */
     .form-card {
         width: 95%;
         max-width: 450px;
@@ -428,14 +106,12 @@ textarea {
             font-size: 26px;
         }
 
-    /* Поля ввода - увеличенные для удобства */
     .input {
         padding: 14px 16px;
         font-size: 16px;
         border-radius: 8px;
     }
 
-    /* Кнопки - крупные и удобные */
     .btn {
         padding: 14px;
         font-size: 17px;
@@ -449,7 +125,6 @@ textarea {
             min-width: 100px;
         }
 
-    /* Карточки */
     .card {
         padding: 18px;
         gap: 14px;
@@ -468,7 +143,6 @@ textarea {
         gap: 8px;
     }
 
-    /* Секции с заявками - полная ширина */
     .section {
         width: 100%;
         height: auto;
@@ -483,7 +157,6 @@ textarea {
             margin-bottom: 16px;
         }
 
-    /* Вертикальная компоновка для списка и деталей */
     .requests-layout {
         flex-direction: column;
         height: auto;
@@ -515,7 +188,6 @@ textarea {
         padding: 16px;
     }
 
-    /* Текстовые поля */
     .full-text {
         font-size: 14px;
         padding: 14px;
@@ -527,7 +199,6 @@ textarea {
         font-size: 14px;
     }
 
-    /* Форма создания заявки */
     .create-form {
         padding: 18px;
         border-radius: 8px;
@@ -540,7 +211,6 @@ textarea {
         min-height: 120px;
     }
 
-    /* Группы кнопок действий */
     .actions {
         flex-direction: column;
         gap: 12px;
@@ -551,36 +221,27 @@ textarea {
             width: 100%;
         }
 
-    /* Сетка для карточек */
     .grid {
         grid-template-columns: 1fr;
         gap: 16px;
         padding: 8px;
     }
 
-    /* Статусы */
     .status {
         font-size: 12px;
         padding: 4px 10px;
     }
 
-    /* Дополнительные улучшения для очень маленьких экранов (ширина до 480px) */
     @media (max-width: 480px) {
-        .strips {
-            padding: 12px 8px;
-            gap: 10px;
-        }
-
         .nav-btn {
             min-width: 85px;
-            height: 58px;
-            font-size: 15px;
-            padding: 8px 12px;
-            border-radius: 10px;
+            height: 50px;
+            font-size: 14px;
+            padding: 6px 12px;
         }
 
             .nav-btn.active {
-                height: 58px;
+                height: 50px;
             }
 
         .main-title {
@@ -610,40 +271,10 @@ textarea {
         }
     }
 
-    /* Для экранов от 481px до 600px — чуть более широкие кнопки, но всё ещё с переносом */
     @media (min-width: 481px) and (max-width: 600px) {
         .nav-btn {
-            min-width: 110px;
-            font-size: 16px;
+            min-width: 100px;
+            font-size: 15px;
         }
     }
-}
-
-/* ========== ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ДЛЯ ТАЧ-УСТРОЙСТВ ========== */
-@media (hover: none) and (pointer: coarse) {
-    /* Убираем эффекты наведения на тач-устройствах */
-    .nav-btn:hover,
-    .btn:hover,
-    .request-item:hover {
-        transform: none;
-    }
-
-    /* Увеличиваем область клика */
-    .nav-btn,
-    .btn,
-    .request-item,
-    .input {
-        cursor: pointer;
-    }
-
-        /* Добавляем активное состояние для тач-устройств */
-        .nav-btn:active,
-        .btn:active {
-            opacity: 0.8;
-            transform: scale(0.96);
-        }
-
-        .request-item:active {
-            background: #f0f0f0;
-        }
 }
