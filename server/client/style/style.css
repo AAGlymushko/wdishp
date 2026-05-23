@@ -478,13 +478,162 @@ textarea {
         }
 }
 
-/* Дополнительно: если у вас очень маленькие экраны */
-@media (max-width: 420px) {
-    .main-title {
-        font-size: 3.8rem;
+@media (max-width: 768px) {
+    /* ====== Навигация: вертикально + крупные тач-цели ====== */
+    .strips-top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px 12px;
+        gap: 10px;
+        /* чтобы кнопки точно влезли */
+        height: auto;
+        min-height: 170px; /* запас под несколько кнопок */
     }
 
-    .centered-page {
-        padding: 180px 12px 36px;
+    .nav-btn {
+        width: 100%;
+        height: 64px;
+        min-height: 64px;
+        margin: 0;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1.1;
+        text-align: center;
+        white-space: nowrap;
     }
+
+        .nav-btn.active {
+            height: 68px;
+            min-height: 68px;
+        }
+
+    /* Если у тебя есть нижняя полоса — чаще всего она мешает на мобиле */
+    .strips-bottom {
+        display: none;
+    }
+
+    /* ====== Под фиксированную шапку: увеличиваем верхний отступ ====== */
+    .centered-page {
+        padding: 220px 16px 40px;
+        min-height: calc(100vh - 260px);
+    }
+
+    /* ====== Заголовки: чтобы не выглядело мелко ====== */
+    .main-title {
+        font-size: 4.6rem;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+
+    .main-signature {
+        position: static;
+        font-size: 1.7rem;
+        margin-top: 14px;
+        text-align: center;
+    }
+
+    /* ====== Формы: крупнее ====== */
+    .form-card {
+        width: 100%;
+        max-width: 440px;
+        padding: 30px 18px;
+        border-radius: 10px;
+        gap: 18px;
+    }
+
+        .form-card h2 {
+            font-size: 30px;
+        }
+
+    .input {
+        padding: 16px 16px;
+        font-size: 18px;
+        border-radius: 10px;
+    }
+
+    .btn {
+        padding: 16px 14px;
+        font-size: 20px;
+        border-radius: 12px;
+        font-weight: 900;
+    }
+
+        .btn.small {
+            padding: 14px 16px;
+            font-size: 16px;
+            border-radius: 10px;
+        }
+
+    /* ====== Секция/контент: без “80vh” чтобы не было сжатия ====== */
+    .section {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        padding: 16px;
+        border-radius: 10px;
+        overflow: visible;
+    }
+
+        .section h2 {
+            font-size: 1.6rem;
+        }
+
+    /* ====== Две колонки → в одну, чтобы читалось ====== */
+    .requests-layout {
+        flex-direction: column;
+        height: auto;
+        gap: 12px;
+    }
+
+    .requests-list,
+    .details-panel {
+        width: 100%;
+        max-height: none;
+        height: auto;
+        overflow: visible;
+    }
+
+    .request-item {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .request-meta {
+        font-size: 1.02rem;
+    }
+
+    .full-text {
+        font-size: 15.5px;
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .create-form {
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    textarea {
+        font-size: 16.5px;
+        padding: 14px 12px;
+        border-radius: 10px;
+    }
+
+    /* Кнопки действий крупно и вертикально */
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+        .actions .btn {
+            width: 100%;
+            padding: 16px 14px;
+            font-size: 18px;
+        }
 }
