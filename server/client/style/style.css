@@ -335,14 +335,17 @@ textarea {
 
 /* ========== МОБИЛЬНЫЕ ТЕЛЕФОНЫ (до 768px) ========== */
 @media (max-width: 768px) {
-    /* Навигационные полосы - увеличены и центрированы */
+    /* Навигационные полосы - адаптивные, с переносом кнопок */
     .strips {
         min-height: auto;
         padding: 16px 12px;
-        flex-wrap: wrap;
+        display: flex;
+        flex-wrap: wrap; /* Включаем перенос элементов */
         justify-content: center;
+        align-items: center;
         gap: 12px;
         height: auto;
+        background: rgb(11, 43, 64);
     }
 
     .strips-top,
@@ -350,7 +353,6 @@ textarea {
         position: fixed;
         left: 0;
         right: 0;
-        background: rgb(11, 43, 64);
         box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
     }
 
@@ -366,10 +368,11 @@ textarea {
         border-top: 1px solid rgba(255,255,255,0.15);
     }
 
-    /* Кнопки навигации - несколько рядов, центрированы, увеличены */
+    /* Кнопки навигации — гибкие, с переносом на новую строку */
     .nav-btn {
-        flex: 0 1 auto;
-        min-width: 100px;
+        flex: 0 1 auto; /* Не растягиваются, но могут сжиматься */
+        min-width: 100px; /* Минимальная ширина для читаемости */
+        max-width: 160px; /* Ограничение максимальной ширины */
         height: 64px;
         font-size: 18px;
         padding: 10px 16px;
@@ -378,6 +381,7 @@ textarea {
         border-radius: 12px;
         font-weight: 600;
         letter-spacing: 0.5px;
+        text-align: center;
     }
 
         .nav-btn.active {
@@ -560,7 +564,7 @@ textarea {
         padding: 4px 10px;
     }
 
-    /* Дополнительные улучшения для очень маленьких экранов */
+    /* Дополнительные улучшения для очень маленьких экранов (ширина до 480px) */
     @media (max-width: 480px) {
         .strips {
             padding: 12px 8px;
@@ -606,7 +610,7 @@ textarea {
         }
     }
 
-    /* Для экранов от 481px до 600px - три колонки */
+    /* Для экранов от 481px до 600px — чуть более широкие кнопки, но всё ещё с переносом */
     @media (min-width: 481px) and (max-width: 600px) {
         .nav-btn {
             min-width: 110px;
