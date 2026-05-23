@@ -5,7 +5,7 @@
 body, html {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif; /* серьёзный системный шрифт */
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
     background: linear-gradient( rgb(255, 255, 255) 0%, rgb(245, 254, 255) 35%, rgb(245, 254, 255) 65%, rgb(255, 255, 255) 100%);
     color: #0a2f4d;
 }
@@ -14,6 +14,7 @@ html {
     overflow-y: scroll;
 }
 
+/* Верхняя и нижняя полосы */
 .strips {
     height: 80px;
     background: rgb(11, 43, 64);
@@ -29,6 +30,8 @@ html {
     left: 0;
     right: 0;
     justify-content: flex-end;
+    flex-wrap: wrap; /* разрешаем перенос кнопок на маленьких экранах */
+    gap: 6px;
 }
 
 .strips-bottom {
@@ -38,6 +41,7 @@ html {
     right: 0;
 }
 
+/* Кнопки навигации */
 .nav-btn {
     background: transparent;
     border: none;
@@ -50,6 +54,7 @@ html {
     margin-left: 6px;
     height: 80px;
     width: 150px;
+    transition: background 0.2s;
 }
 
     .nav-btn:hover {
@@ -61,6 +66,7 @@ html {
         background: #6096ba;
     }
 
+/* Главный экран */
 .centered-page {
     display: flex;
     flex-direction: column;
@@ -90,12 +96,14 @@ html {
     text-align: center;
 }
 
+/* Форма авторизации */
 .form-card {
     background: #274c77;
     border: 1px solid #6096ba;
     border-radius: 4px;
     padding: 24px 20px;
     width: 320px;
+    max-width: 90%;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -158,6 +166,7 @@ html {
         font-size: 14px;
     }
 
+/* Карточки */
 .card {
     background: white;
     border: 1px solid #ddd;
@@ -189,6 +198,7 @@ html {
     gap: 20px;
 }
 
+/* Секции */
 .section {
     width: 90%;
     max-width: 1100px;
@@ -206,6 +216,7 @@ html {
         color: #0a2f4d;
     }
 
+/* Заявки */
 .requests-layout {
     display: flex;
     gap: 24px;
@@ -310,4 +321,161 @@ textarea {
     padding: 40px;
     color: #666;
     grid-column: 1 / -1;
+}
+
+/* ================================
+   Адаптивность
+   ================================ */
+
+/* Планшеты и небольшие ноутбуки */
+@media (max-width: 1024px) {
+    .main-title {
+        font-size: 6rem;
+    }
+
+    .main-signature {
+        font-size: 1.5rem;
+        left: 20vw;
+        bottom: 20vh;
+    }
+
+    .strips {
+        height: 70px;
+        padding: 0 16px;
+    }
+
+    .nav-btn {
+        width: auto;
+        min-width: 90px;
+        height: 70px;
+        font-size: 16px;
+        padding: 6px 10px;
+    }
+
+        .nav-btn.active {
+            height: 75px;
+        }
+
+    .section {
+        width: 95%;
+        height: auto;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    main {
+        padding-top: 70px;
+        padding-bottom: 70px;
+    }
+
+    .centered-page {
+        min-height: calc(100vh - 140px);
+    }
+}
+
+/* Телефоны */
+@media (max-width: 768px) {
+    /* Верхняя панель с кнопками */
+    .strips {
+        height: auto;
+        min-height: 50px;
+        padding: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .strips-top {
+        justify-content: center;
+    }
+
+    .strips-bottom {
+        height: 40px; /* тонкая полоска внизу */
+    }
+
+    .nav-btn {
+        width: auto;
+        height: auto;
+        padding: 8px 10px;
+        font-size: 14px;
+        margin: 2px;
+        border-radius: 4px;
+    }
+
+        .nav-btn.active {
+            height: auto;
+            background: #6096ba;
+        }
+
+    /* Главный заголовок */
+    .main-title {
+        font-size: 3rem;
+        letter-spacing: 2px;
+    }
+
+    .main-signature {
+        position: static; /* убираем absolute, чтобы не наезжало */
+        font-size: 1.2rem;
+        margin-top: 12px;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+
+    /* Форма */
+    .form-card {
+        width: 90%;
+        max-width: 320px;
+    }
+
+    /* Секции */
+    .section {
+        width: 100%;
+        height: auto;
+        overflow-y: visible;
+        padding: 16px;
+        border-radius: 0;
+    }
+
+    /* Заявки – переводим в колонку */
+    .requests-layout {
+        flex-direction: column;
+        height: auto;
+        gap: 12px;
+    }
+
+    .requests-list {
+        max-height: 40vh;
+    }
+
+    .details-panel {
+        flex: none;
+        width: 100%;
+    }
+
+    /* Сетка карточек – одна колонка */
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    /* Отступы, чтобы фиксированные полосы не перекрывали контент */
+    main {
+        padding-top: 100px; /* с запасом под возможный перенос кнопок */
+        padding-bottom: 40px;
+    }
+
+    .centered-page {
+        min-height: calc(100vh - 140px);
+        padding: 20px 16px;
+    }
+
+    /* Мелкие правки */
+    .btn {
+        font-size: 15px;
+        padding: 10px;
+    }
+
+        .btn.small {
+            font-size: 13px;
+            padding: 6px 10px;
+        }
 }
