@@ -30,7 +30,7 @@ html {
     left: 0;
     right: 0;
     justify-content: flex-end;
-    flex-wrap: wrap; /* разрешаем перенос кнопок на маленьких экранах */
+    flex-wrap: wrap;
     gap: 6px;
 }
 
@@ -91,7 +91,7 @@ html {
     margin: 0;
     position: absolute;
     bottom: 30vh;
-    left: 32vh;
+    left: 30vh;
     right: 0;
     text-align: center;
 }
@@ -375,11 +375,11 @@ textarea {
 
 /* Телефоны */
 @media (max-width: 768px) {
-    /* Верхняя панель с кнопками */
+    /* Верхняя панель: кнопки становятся крупнее и переносятся */
     .strips {
         height: auto;
         min-height: 50px;
-        padding: 8px;
+        padding: 8px 4px;
         flex-wrap: wrap;
         justify-content: center;
     }
@@ -389,16 +389,22 @@ textarea {
     }
 
     .strips-bottom {
-        height: 40px; /* тонкая полоска внизу */
+        height: 40px;
     }
 
+    /* Навигационные кнопки – крупные, удобные для пальцев */
     .nav-btn {
         width: auto;
+        min-width: 100px;
         height: auto;
-        padding: 8px 10px;
-        font-size: 14px;
-        margin: 2px;
-        border-radius: 4px;
+        min-height: 48px;
+        padding: 10px 16px;
+        font-size: 16px;
+        margin: 4px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
         .nav-btn.active {
@@ -408,23 +414,44 @@ textarea {
 
     /* Главный заголовок */
     .main-title {
-        font-size: 3rem;
-        letter-spacing: 2px;
+        font-size: 3.5rem;
+        letter-spacing: 1px;
     }
 
     .main-signature {
-        position: static; /* убираем absolute, чтобы не наезжало */
-        font-size: 1.2rem;
+        position: static;
+        font-size: 1.3rem;
         margin-top: 12px;
         text-align: center;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
     }
 
-    /* Форма */
+    /* Форма авторизации */
     .form-card {
         width: 90%;
-        max-width: 320px;
+        max-width: 400px;
     }
+
+        .form-card h2 {
+            font-size: 22px;
+        }
+
+    .input {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .btn {
+        font-size: 16px;
+        padding: 12px;
+        min-height: 48px;
+    }
+
+        .btn.small {
+            font-size: 14px;
+            padding: 10px 16px;
+            min-height: 44px;
+        }
 
     /* Секции */
     .section {
@@ -435,7 +462,7 @@ textarea {
         border-radius: 0;
     }
 
-    /* Заявки – переводим в колонку */
+    /* Заявки – в столбик */
     .requests-layout {
         flex-direction: column;
         height: auto;
@@ -457,25 +484,24 @@ textarea {
         gap: 16px;
     }
 
-    /* Отступы, чтобы фиксированные полосы не перекрывали контент */
+    /* Отступы для контента, чтобы не перекрывался верхней и нижней панелями */
     main {
-        padding-top: 100px; /* с запасом под возможный перенос кнопок */
-        padding-bottom: 40px;
+        padding-top: 140px; /* с учётом переноса кнопок */
+        padding-bottom: 50px;
     }
 
     .centered-page {
-        min-height: calc(100vh - 140px);
+        min-height: calc(100vh - 190px);
         padding: 20px 16px;
     }
 
-    /* Мелкие правки */
-    .btn {
-        font-size: 15px;
-        padding: 10px;
+    /* Дополнительные улучшения */
+    .request-item {
+        padding: 14px;
+        margin-bottom: 6px;
     }
 
-        .btn.small {
-            font-size: 13px;
-            padding: 6px 10px;
-        }
+    .card {
+        padding: 14px;
+    }
 }
