@@ -1,34 +1,38 @@
+/* ========= База ========= */
 * {
     box-sizing: border-box;
-}
-
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-    background: linear-gradient( rgb(255, 255, 255) 0%, rgb(245, 254, 255) 35%, rgb(245, 254, 255) 65%, rgb(255, 255, 255) 100%);
-    color: #0a2f4d;
 }
 
 html {
     overflow-y: scroll;
 }
 
-/* ========== Десктопная версия (по умолчанию) ========== */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+    background: linear-gradient( rgb(255, 255, 255) 0%, rgb(245, 254, 255) 35%, rgb(245, 254, 255) 65%, rgb(255, 255, 255) 100% );
+    color: #0a2f4d;
+}
+
+/* ========= Навигация (общие) ========= */
 .strips {
-    height: 80px;
+    width: 100%;
     background: rgb(11, 43, 64);
     display: flex;
     align-items: center;
     padding: 0 20px;
     z-index: 100;
+    gap: 10px;
 }
 
+/* по умолчанию — ДЕСКТОП */
 .strips-top {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    height: 80px;
     justify-content: flex-end;
 }
 
@@ -39,22 +43,28 @@ html {
     right: 0;
 }
 
+/* Кнопка навигации — ДЕСКТОП */
 .nav-btn {
     background: transparent;
     border: none;
     color: white;
     padding: 6px 14px;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     margin-left: 6px;
     height: 80px;
     width: 150px;
+    transition: background 150ms ease, transform 150ms ease, height 150ms ease;
 }
 
     .nav-btn:hover {
         background: rgba(96, 150, 186, 0.3);
+    }
+
+    .nav-btn:active {
+        transform: scale(0.99);
     }
 
     .nav-btn.active {
@@ -62,13 +72,15 @@ html {
         background: #6096ba;
     }
 
+/* ========= Контент ========= */
 .centered-page {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    /* под полосы сверху/снизу */
     min-height: calc(100vh - 120px);
-    padding: 60px 20px 40px;
+    padding: 80px 20px 60px;
     position: relative;
 }
 
@@ -94,7 +106,7 @@ html {
 .form-card {
     background: #274c77;
     border: 1px solid #6096ba;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 24px 20px;
     width: 320px;
     display: flex;
@@ -111,9 +123,9 @@ html {
 
 .input {
     width: 100%;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border: 1px solid #6096ba;
-    border-radius: 4px;
+    border-radius: 6px;
     background: rgba(167, 202, 228, 0.2);
     color: #e0f7fa;
     font-size: 15px;
@@ -133,16 +145,21 @@ html {
     width: 100%;
     padding: 10px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 800;
     cursor: pointer;
     background: #6096ba;
     color: white;
+    transition: background 150ms ease, transform 150ms ease;
 }
 
     .btn:hover {
         background: #7baed2;
+    }
+
+    .btn:active {
+        transform: scale(0.99);
     }
 
     .btn.danger {
@@ -155,14 +172,14 @@ html {
 
     .btn.small {
         width: auto;
-        padding: 6px 14px;
+        padding: 8px 14px;
         font-size: 14px;
     }
 
 .card {
     background: white;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 16px;
     display: flex;
     flex-direction: column;
@@ -195,8 +212,9 @@ html {
     max-width: 1100px;
     margin: 0 auto;
     background: #fff;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 20px;
+    /* удобно на ПК: фиксируем высоту и скроллим внутри */
     height: 80vh;
     overflow-y: auto;
 }
@@ -217,7 +235,7 @@ html {
     flex: 1;
     overflow-y: auto;
     background: rgba(255,255,255,0.8);
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 8px;
     border: 1px solid #ccc;
 }
@@ -225,7 +243,7 @@ html {
 .request-item {
     background: white;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 12px;
     margin-bottom: 8px;
     cursor: pointer;
@@ -240,19 +258,20 @@ html {
     display: flex;
     justify-content: space-between;
     font-size: 0.9rem;
+    gap: 10px;
 }
 
 .status {
-    font-weight: bold;
+    font-weight: 800;
     padding: 2px 8px;
-    border-radius: 4px;
+    border-radius: 999px;
     background: #e0e0e0;
 }
 
 .details-panel {
     flex: 2;
     background: white;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 20px;
     overflow-y: auto;
 }
@@ -264,6 +283,7 @@ html {
     border-bottom: 1px solid #ddd;
     padding-bottom: 8px;
     margin-bottom: 12px;
+    gap: 12px;
 }
 
 .full-text {
@@ -271,7 +291,7 @@ html {
     font-family: monospace;
     background: #f5f5f5;
     padding: 12px;
-    border-radius: 4px;
+    border-radius: 6px;
     border: 1px solid #ddd;
 }
 
@@ -284,7 +304,7 @@ html {
 
 .create-form {
     background: white;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid #ccc;
@@ -293,8 +313,8 @@ html {
 textarea {
     width: 100%;
     border: 1px solid #6096ba;
-    border-radius: 4px;
-    padding: 8px;
+    border-radius: 6px;
+    padding: 10px;
     font-family: inherit;
     resize: vertical;
 }
@@ -310,77 +330,69 @@ textarea {
     text-align: center;
     padding: 40px;
     color: #666;
-    grid-column: 1 / -1;
 }
 
-/* ========== Мобильная версия (телефоны, до 768px) ========== */
+/* ========= Мобильная версия ========= */
 @media (max-width: 768px) {
-    /* Увеличиваем верхнюю и нижнюю полосы навигации */
-    .strips {
-        height: auto; /* высота по содержимому, чтобы вместить крупные кнопки */
-        min-height: 90px; /* минимальная высота */
-        padding: 10px 8px;
-        flex-wrap: wrap; /* кнопки могут переноситься, если не помещаются */
-        justify-content: center; /* центрируем меню */
-        gap: 6px;
-    }
-
-    /* Фиксированные полосы по-прежнему прибиты к верху/низу */
-    .strips-top,
-    .strips-bottom {
-        position: fixed;
-        left: 0;
-        right: 0;
-    }
-
+    /* ----- Полосы ----- */
     .strips-top {
         top: 0;
+        height: auto; /* чтобы меню не обрезалось */
+        justify-content: center;
+        padding: 12px 10px;
+    }
+
+    /* ВАЖНО: вертикальное меню */
+    .strips-top {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
     }
 
     .strips-bottom {
-        bottom: 0;
+        display: none; /* если есть нижняя полоса и мешает — отключаем */
     }
 
-    /* Кнопки навигации: крупнее, занимают равную ширину */
     .nav-btn {
-        height: 70px; /* достаточно высокие для пальца */
-        width: auto; /* ширина по содержимому/равномерно */
-        flex: 1 1 auto; /* растягиваются, занимая доступное место */
-        font-size: 20px; /* крупный читаемый текст */
-        padding: 12px 18px;
-        margin: 0 4px;
-        white-space: nowrap;
+        width: 100%; /* крупные кнопки в вертикали */
+        margin-left: 0;
+        height: 64px; /* минимум для пальца */
+        min-height: 64px;
+        padding: 10px 14px;
+        font-size: 20px; /* читаемо */
+        text-align: center;
+        border-radius: 10px;
     }
 
         .nav-btn.active {
-            height: 74px; /* чуть выше активная, но не ломает */
+            height: 68px;
+            min-height: 68px;
         }
 
-    /* Центральная страница (логин, заголовок) */
+    /* центральная страница подстраиваем под большую шапку */
     .centered-page {
-        min-height: calc(100vh - 140px); /* с учётом новых высот полос */
-        padding: 40px 16px 30px;
+        padding: 190px 16px 40px; /* учитываем фиксированную вертикальную шапку */
+        min-height: calc(100vh - 230px);
     }
 
     .main-title {
-        font-size: 4rem; /* на мобиле всё равно крупно, но влезает */
+        font-size: 4.5rem;
         letter-spacing: 2px;
-    }
-
-    .main-signature {
-        position: static; /* убираем абсолютное позиционирование */
-        font-size: 1.4rem;
-        margin-top: 16px;
-        left: auto;
-        bottom: auto;
         text-align: center;
     }
 
-    /* Формы авторизации */
+    .main-signature {
+        position: static; /* убираем абсолют */
+        font-size: 1.5rem;
+        margin-top: 14px;
+        text-align: center;
+    }
+
+    /* ----- Формы ----- */
     .form-card {
-        width: 90%;
-        max-width: 400px;
-        padding: 32px 20px;
+        width: 100%;
+        max-width: 420px;
+        padding: 28px 18px;
     }
 
         .form-card h2 {
@@ -388,57 +400,51 @@ textarea {
         }
 
     .input {
-        padding: 14px 16px;
         font-size: 18px;
+        padding: 14px 16px;
     }
 
     .btn {
-        padding: 14px;
+        padding: 14px 12px;
         font-size: 18px;
+        border-radius: 10px;
     }
 
         .btn.small {
-            padding: 10px 18px;
+            padding: 12px 16px;
             font-size: 16px;
         }
 
-    /* Карточки и секции */
-    .card {
-        padding: 20px;
-        gap: 16px;
-    }
-
-        .card h3 {
-            font-size: 1.4rem;
-        }
-
-    .row {
-        font-size: 16px;
-        padding: 10px 0;
-    }
-
-    /* Секция с заявками */
+    /* ----- Разделы ----- */
     .section {
         width: 100%;
-        height: auto;
-        max-height: 75vh;
+        height: auto; /* на мобиле лучше НЕ фиксировать 80vh */
+        max-height: none;
+        min-height: 0;
         padding: 16px;
+        overflow: visible;
     }
 
     .requests-layout {
-        flex-direction: column;
+        flex-direction: column; /* вертикально */
         height: auto;
-        gap: 16px;
+        gap: 12px;
     }
 
     .requests-list,
     .details-panel {
         width: 100%;
-        max-height: 45vh;
+        max-height: none;
+        height: auto;
+    }
+
+    .requests-list {
+        padding: 10px;
     }
 
     .request-item {
         padding: 16px;
+        border-radius: 10px;
     }
 
     .request-meta {
@@ -447,24 +453,38 @@ textarea {
 
     .full-text {
         font-size: 15px;
-        padding: 16px;
+        padding: 14px;
+        border-radius: 10px;
     }
 
     .create-form {
         padding: 20px;
+        border-radius: 10px;
     }
 
     textarea {
         font-size: 16px;
-        padding: 12px;
+        padding: 14px 12px;
+        border-radius: 10px;
     }
 
     .actions {
-        flex-direction: column;
+        flex-direction: column; /* кнопки друг под другом */
         align-items: stretch;
     }
 
         .actions .btn {
             width: 100%;
         }
+}
+
+/* Дополнительно: если у вас очень маленькие экраны */
+@media (max-width: 420px) {
+    .main-title {
+        font-size: 3.8rem;
+    }
+
+    .centered-page {
+        padding: 180px 12px 36px;
+    }
 }
