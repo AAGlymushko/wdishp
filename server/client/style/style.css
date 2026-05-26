@@ -14,7 +14,6 @@ html {
     overflow-y: scroll;
 }
 
-/* ========== Десктопная версия (по умолчанию) ========== */
 .strips {
     height: 80px;
     background: rgb(11, 43, 64);
@@ -73,7 +72,6 @@ html {
     position: relative;
 }
 
-/* Контейнер для заголовков на главной странице */
 .hero-section {
     display: flex;
     flex-direction: column;
@@ -322,7 +320,6 @@ textarea {
     grid-column: 1 / -1;
 }
 
-/* ========== ПЛАНШЕТЫ (768px - 1024px) ========== */
 @media (max-width: 1024px) and (min-width: 769px) {
     .nav-btn {
         width: 130px;
@@ -338,9 +335,7 @@ textarea {
     }
 }
 
-/* ========== МОБИЛЬНЫЕ ТЕЛЕФОНЫ (до 768px) ========== */
 @media (max-width: 768px) {
-    /* Навигационные полосы - с горизонтальной прокруткой */
     .strips {
         min-height: auto;
         padding: 12px 16px;
@@ -357,7 +352,6 @@ textarea {
         -webkit-overflow-scrolling: touch;
     }
 
-        /* Стилизация скроллбара для Webkit браузеров */
         .strips::-webkit-scrollbar {
             height: 3px;
         }
@@ -391,7 +385,6 @@ textarea {
         border-top: 1px solid rgba(255,255,255,0.15);
     }
 
-    /* Кнопки навигации — фиксированная ширина, не сжимаются */
     .nav-btn {
         flex: 0 0 auto;
         width: auto;
@@ -412,14 +405,12 @@ textarea {
             background: #6096ba;
         }
 
-    /* Основной контент */
     .centered-page {
         min-height: calc(100vh - 160px);
         padding: 90px 16px 80px;
         justify-content: flex-start;
     }
 
-    /* Контейнер для заголовков */
     .hero-section {
         width: 100%;
         margin-top: 20px;
@@ -579,7 +570,6 @@ textarea {
         padding: 4px 10px;
     }
 
-    /* Дополнительные улучшения для очень маленьких экранов */
     @media (max-width: 480px) {
         .strips {
             padding: 10px 12px;
@@ -625,7 +615,6 @@ textarea {
         }
     }
 
-    /* Для экранов от 481px до 600px */
     @media (min-width: 481px) and (max-width: 600px) {
         .nav-btn {
             min-width: 95px;
@@ -634,7 +623,6 @@ textarea {
     }
 }
 
-/* ========== ДОПОЛНИТЕЛЬНЫЕ УЛУЧШЕНИЯ ДЛЯ ТАЧ-УСТРОЙСТВ ========== */
 @media (hover: none) and (pointer: coarse) {
     .nav-btn:hover,
     .btn:hover,
@@ -658,4 +646,121 @@ textarea {
         .request-item:active {
             background: #f0f0f0;
         }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+    .strips {
+        padding: 6px 12px;
+        gap: 6px;
+    }
+
+    .nav-btn {
+        height: 44px;
+        min-width: 80px;
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+        .nav-btn.active {
+            height: 44px;
+        }
+
+    .centered-page {
+        min-height: calc(100vh - 100px);
+        padding: 70px 16px 60px;
+    }
+
+    .main-title {
+        font-size: 2.2rem;
+    }
+
+    .main-signature {
+        font-size: 1rem;
+        margin-top: 8px;
+    }
+
+    .form-card {
+        padding: 20px 16px;
+        gap: 12px;
+    }
+
+        .form-card h2 {
+            font-size: 22px;
+        }
+
+    .input {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .btn {
+        padding: 10px;
+        font-size: 15px;
+    }
+
+    .section {
+        padding: 12px;
+        height: auto;
+        max-height: 70vh;
+    }
+
+    .requests-list {
+        max-height: 250px;
+    }
+
+    .request-item {
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+
+    .details-panel {
+        max-height: 300px;
+        padding: 12px;
+    }
+
+    .full-text {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .actions {
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+        .actions .btn {
+            width: auto;
+        }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .strips {
+        padding: 4px 10px;
+    }
+
+    .nav-btn {
+        height: 38px;
+        font-size: 12px;
+    }
+
+    .centered-page {
+        min-height: calc(100vh - 80px);
+        padding: 60px 12px 50px;
+    }
+
+    .main-title {
+        font-size: 1.8rem;
+    }
+
+    .hero-section {
+        margin-top: 0;
+    }
+
+    .requests-list {
+        max-height: 180px;
+    }
+
+    .details-panel {
+        max-height: 220px;
+    }
 }
