@@ -649,78 +649,93 @@ textarea {
 }
 
 @media (max-width: 900px) and (orientation: landscape) {
+    .strips-bottom {
+        display: none;
+    }
+
+    .strips-top {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: rgb(11, 43, 64);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
     .strips {
-        padding: 6px 12px;
-        gap: 6px;
+        height: auto;
+        min-height: auto;
     }
 
     .nav-btn {
-        height: 44px;
-        min-width: 80px;
-        font-size: 14px;
-        padding: 6px 12px;
+        height: 40px;
+        min-width: 70px;
+        width: auto;
+        flex: 0 1 auto;
+        font-size: 13px;
+        padding: 6px 10px;
+        margin: 0;
+        border-radius: 6px;
     }
 
         .nav-btn.active {
-            height: 44px;
+            height: 40px;
         }
 
     .centered-page {
-        min-height: calc(100vh - 100px);
-        padding: 70px 16px 60px;
+        min-height: calc(100vh - 70px);
+        padding: 70px 16px 20px;
     }
 
     .main-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
     .main-signature {
-        font-size: 1rem;
-        margin-top: 8px;
+        font-size: 0.9rem;
+        margin-top: 6px;
     }
 
     .form-card {
-        padding: 20px 16px;
-        gap: 12px;
+        padding: 16px;
+        gap: 10px;
     }
 
         .form-card h2 {
-            font-size: 22px;
+            font-size: 20px;
         }
 
     .input {
-        padding: 8px 12px;
-        font-size: 14px;
+        padding: 8px 10px;
+        font-size: 13px;
     }
 
     .btn {
-        padding: 10px;
-        font-size: 15px;
+        padding: 8px;
+        font-size: 14px;
     }
 
     .section {
         padding: 12px;
-        height: auto;
-        max-height: 70vh;
+        max-height: 65vh;
     }
 
     .requests-list {
-        max-height: 250px;
-    }
-
-    .request-item {
-        padding: 10px;
-        margin-bottom: 8px;
+        max-height: 200px;
     }
 
     .details-panel {
-        max-height: 300px;
+        max-height: 250px;
         padding: 12px;
     }
 
     .full-text {
-        font-size: 12px;
-        padding: 10px;
+        font-size: 11px;
+        padding: 8px;
     }
 
     .actions {
@@ -731,25 +746,37 @@ textarea {
         .actions .btn {
             width: auto;
         }
+
+    .request-item {
+        padding: 8px;
+        margin-bottom: 6px;
+    }
 }
 
 @media (max-height: 500px) and (orientation: landscape) {
-    .strips {
+    .strips-top {
         padding: 4px 10px;
+        gap: 5px;
     }
 
     .nav-btn {
-        height: 38px;
-        font-size: 12px;
+        height: 34px;
+        min-width: 60px;
+        font-size: 11px;
+        padding: 4px 8px;
     }
 
+        .nav-btn.active {
+            height: 34px;
+        }
+
     .centered-page {
-        min-height: calc(100vh - 80px);
-        padding: 60px 12px 50px;
+        min-height: calc(100vh - 60px);
+        padding: 60px 12px 12px;
     }
 
     .main-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     .hero-section {
@@ -757,10 +784,10 @@ textarea {
     }
 
     .requests-list {
-        max-height: 180px;
+        max-height: 150px;
     }
 
     .details-panel {
-        max-height: 220px;
+        max-height: 200px;
     }
 }
