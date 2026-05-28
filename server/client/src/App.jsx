@@ -52,8 +52,12 @@ function Authorization({ onAuthSuccess, onAdminSuccess }) {
 
     return (
         <div className="centered-page">
-            <div className="form-card">
-                <h2>Авторизация</h2>
+            <div className="form-card"> 
+                {
+                    isUser
+                        ? <h2>Авторизация пользователя</h2>
+                        : <h2>Авторизация администратора</h2>
+                }
                 {isUser ? (
                     <input id="phoneNumber" className="input" placeholder="Номер телефона" />
                 ) : (
