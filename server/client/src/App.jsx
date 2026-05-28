@@ -4,38 +4,33 @@ import { io } from 'socket.io-client';
 
 const socket = io('https://wdishpeasylifeserver.onrender.com/');
 
-let name = null;
-let password = null;
-let phoneNumber = null;
-let isAuthorized = false;
-let isAdmin = false;
-
 const createBlocks = (index) => {
     const arr = new Array(7).fill(false);
     arr[index] = true;
     return arr;
 };
 
-function Authorization() {
+function Authorization({ onAuthSuccess, onAdminSuccess }) {
     const [isUser, setIsUser] = useState(true);
 
     useEffect(() => {
         const handleAuth = (data) => {
             alert(data.message);
             if (data.message === 'success') {
-                password = data.password;
-                phoneNumber = data.phoneNumber;
-                name = data.name;
-                isAuthorized = true;
+                onAuthSuccess({
+                    password: data.password,
+                    phoneNumber: data.phoneNumber,
+                    name: data.name,
+                });
             }
         };
         const handleAdminAuth = (data) => {
             alert(data.message);
             if (data.message === 'success') {
-                password = data.password;
-                name = data.name;
-                isAuthorized = true;
-                isAdmin = true;
+                onAdminSuccess({
+                    password: data.password,
+                    name: data.name,
+                });
             }
         };
 
@@ -45,7 +40,7 @@ function Authorization() {
             socket.off('authorization', handleAuth);
             socket.off('authorizationAdmin', handleAdminAuth);
         };
-    }, []);
+    }, [onAuthSuccess, onAdminSuccess]);
 
     const send = () => {
         socket.emit(isUser ? 'authorization' : 'authorizationAdmin', {
@@ -60,9 +55,9 @@ function Authorization() {
             <div className="form-card">
                 <h2>Авторизация</h2>
                 {isUser ? (
-                    <input id="phoneNumber" className="input" placeholder="Номер телефона" defaultValue={phoneNumber || ''} />
+                    <input id="phoneNumber" className="input" placeholder="Номер телефона" />
                 ) : (
-                    <input id="name" className="input" placeholder="Имя" defaultValue={name || ''} />
+                    <input id="name" className="input" placeholder="Имя" />
                 )}
                 <input id="password" className="input" type="password" placeholder="Пароль" />
                 <button className="btn" onClick={() => setIsUser(!isUser)}>
@@ -83,43 +78,32 @@ function MainWindow() {
     );
 }
 
-function AccountWindow({ setBlocks }) {
+function AccountWindow({ userData, setUserData, onLogout, isAdmin }) {
     useEffect(() => {
-        socket.on('redactUserData', (data) => {
+        const handleRedact = (data) => {
             alert(data.isPassword ? 'success' : 'error');
             if (data.isPassword) {
-                password = data.password;
-                name = data.name;
+                setUserData(prev => ({ ...prev, password: data.password, name: data.name }));
             }
-        });
-        socket.on('logOutOfAccount', () => {
-            setBlocks(createBlocks(4));
-            name = null;
-            password = null;
-            phoneNumber = null;
-            isAuthorized = false;
-            isAdmin = false;
-        });
-        return () => {
-            socket.off('redactUserData');
-            socket.off('logOutOfAccount');
         };
-    }, []);
+        socket.on('redactUserData', handleRedact);
+        socket.on('logOutOfAccount', onLogout);
+        return () => {
+            socket.off('redactUserData', handleRedact);
+            socket.off('logOutOfAccount', onLogout);
+        };
+    }, [setUserData, onLogout]);
 
     return (
         <div className="centered-page">
             <div className="form-card">
                 <h2>Личный кабинет</h2>
-                {
-                    !isAdmin &&  <label style={{ alignSelf: 'flex-start', color: '#bbe4fa' }}>Телефон</label>
-                }
-                {
-                    !isAdmin && <input className="input" readOnly value={phoneNumber || ''} />
-                }
+                {!isAdmin && <label style={{ alignSelf: 'flex-start', color: '#bbe4fa' }}>Телефон</label>}
+                {!isAdmin && <input className="input" readOnly value={userData.phoneNumber || ''} />}
                 <label style={{ alignSelf: 'flex-start', color: '#bbe4fa' }}>Имя</label>
-                <input id="name" className="input" defaultValue={name || ''} />
+                <input id="name" className="input" defaultValue={userData.name || ''} />
                 <label style={{ alignSelf: 'flex-start', color: '#bbe4fa' }}>Пароль</label>
-                <input id="password" className="input" type="password" defaultValue={password || ''} />
+                <input id="password" className="input" type="password" defaultValue={userData.password || ''} />
                 <button className="btn" onClick={() => socket.emit('redactUserData', {
                     password: document.getElementById('password').value,
                     name: document.getElementById('name').value
@@ -267,6 +251,7 @@ function Requests() {
     const [requests, setRequests] = useState([]);
     const [selected, setSelected] = useState(null);
     const [showCreate, setShowCreate] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         socket.emit('getUserApplications');
@@ -609,6 +594,34 @@ function AdminRequests() {
 
 function Warp() {
     const [blocks, setBlocks] = useState(createBlocks(0));
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [userData, setUserData] = useState({
+        name: null,
+        password: null,
+        phoneNumber: null,
+    });
+
+    const handleAuthSuccess = (data) => {
+        setUserData(data);
+        setIsAuthorized(true);
+        setIsAdmin(false);
+        setBlocks(createBlocks(4));
+    };
+
+    const handleAdminSuccess = (data) => {
+        setUserData({ ...data, phoneNumber: null });
+        setIsAuthorized(true);
+        setIsAdmin(true);
+        setBlocks(createBlocks(4));
+    };
+
+    const handleLogout = () => {
+        setIsAuthorized(false);
+        setIsAdmin(false);
+        setUserData({ name: null, password: null, phoneNumber: null });
+        setBlocks(createBlocks(0));
+    };
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
@@ -636,19 +649,13 @@ function Warp() {
                         {blocks[3] && (isAdmin ? <AdminRequests /> : <Requests />)}
                     </>
                 )}
-                {
-                    isAuthorized && (<>
-                        {blocks[4] && <AccountWindow setBlocks={setBlocks} />}
-                    </>)
-                }
-                {
-                    !isAuthorized && (<>
-                        {blocks[4] && <Authorization />}
-                    </>)
-                }
-                {
-                    !isAuthorized && !blocks[0] && !blocks[4] && <UnAuthorized />
-                }
+                {isAuthorized && blocks[4] && (
+                    <AccountWindow userData={userData} setUserData={setUserData} onLogout={handleLogout} isAdmin={isAdmin} />
+                )}
+                {!isAuthorized && blocks[4] && (
+                    <Authorization onAuthSuccess={handleAuthSuccess} onAdminSuccess={handleAdminSuccess} />
+                )}
+                {!isAuthorized && !blocks[0] && !blocks[4] && <UnAuthorized />}
             </main>
 
             <div className="strips strips-bottom" />
