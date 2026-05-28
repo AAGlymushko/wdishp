@@ -614,7 +614,7 @@ function Warp() {
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
             <div className="strips strips-top">
                 <div style={{ display: 'flex', gap: 6 }}>
-                    {['Меню', 'Авторизация', 'Тарифы', 'Услуги', 'Заявки', 'Аккаунт'].map((label, i) => (
+                    {['Меню', 'Тарифы', 'Услуги', 'Заявки', !isAuthorized ? 'Авторизация' : 'Аккаунт'].map((label, i) => (
                         <button
                             key={i}
                             className={`nav-btn ${blocks[i] ? 'active' : ''}`}
