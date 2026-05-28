@@ -93,7 +93,7 @@ function AccountWindow({ setBlocks }) {
             }
         });
         socket.on('logOutOfAccount', () => {
-            setBlocks(createBlocks(1));
+            setBlocks(createBlocks(4));
             name = null;
             password = null;
             phoneNumber = null;
@@ -628,18 +628,27 @@ function Warp() {
 
             <main style={{ flex: 1, padding: '60px 0 60px', display: 'flex', flexDirection: 'column' }}>
                 {blocks[0] && <MainWindow />}
-                {blocks[1] && <Authorization />}
 
                 {isAuthorized && (
                     <>
-                        {blocks[2] && (isAdmin ? <AdminTariffs /> : <Tariffs block={blocks[2]} />)}
-                        {blocks[3] && (isAdmin ? <AdminServices /> : <Services block={blocks[3]} />)}
-                        {blocks[4] && (isAdmin ? <AdminRequests /> : <Requests />)}
-                        {blocks[5] && <AccountWindow setBlocks={setBlocks} />}
+                        {blocks[1] && (isAdmin ? <AdminTariffs /> : <Tariffs block={blocks[1]} />)}
+                        {blocks[2] && (isAdmin ? <AdminServices /> : <Services block={blocks[2]} />)}
+                        {blocks[3] && (isAdmin ? <AdminRequests /> : <Requests />)}
                     </>
                 )}
-
-                {!isAuthorized && !blocks[0] && !blocks[1] && <UnAuthorized />}
+                {
+                    isAuthorized && (<>
+                        {blocks[4] && <AccountWindow setBlocks={setBlocks} />}
+                    </>)
+                }
+                {
+                    !isAuthorized && (<>
+                        {blocks[4] && <Authorization />}
+                    </>)
+                }
+                {
+                    !isAuthorized && !blocks[0] && !blocks[4] && <UnAuthorized />
+                }
             </main>
 
             <div className="strips strips-bottom" />
